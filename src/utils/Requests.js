@@ -9,5 +9,7 @@ export const requestData = async (request) => {
     return response.data;
   } catch (err) {
     console.log('Erro:', err);
+
+    return null;
   }
 };
