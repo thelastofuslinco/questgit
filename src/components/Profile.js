@@ -16,7 +16,7 @@ export default function Profile({ user, starreds }) {
       <p className="title">{user.name}</p>
       <p className="subTitle">{user.login}</p>
 
-      <div className=" ">
+      <div className="">
         <p className="mb-0 ">
           <i className="bi bi-people-fill"></i> {user.followers} followers{' '}
           {user.following} following {starreds.length}{' '}
@@ -53,7 +53,7 @@ export default function Profile({ user, starreds }) {
           </p>
         )}
       </div>
-      <p>bio: {user.bio}</p>
+      <p className="m-4 border rounded p-2">{user.bio}</p>
     </div>
   );
 }

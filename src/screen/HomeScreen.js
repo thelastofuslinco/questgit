@@ -1,8 +1,8 @@
-import Button from 'components/Button';
-import Input from 'components/Input';
-import Profile from 'components/Profile';
-import Repository from 'components/Repository';
-import Starred from 'components/Starred';
+import Button from '../components/Button';
+import NavBar from '../components/NavBar';
+import Profile from '../components/Profile';
+import Repository from '../components/Repository';
+import Starred from '../components/Starred';
 import React, { useState } from 'react';
 import { requestData } from '../utils/Requests';
 
@@ -15,45 +15,37 @@ export default function HomeScreen() {
   const [isRepositories, setIsRepositories] = useState(false);
   const [isStarreds, setIsStarreds] = useState(false);
 
-  const [input, setInput] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const getUserData = () => {
-    const future = requestData(input);
+    const future = requestData(searchInput);
     future.then((response) => setUser(response));
     getRepoData();
     getStarredData();
   };
 
   const getRepoData = () => {
-    const future = requestData(input + '/repos');
+    const future = requestData(searchInput + '/repos');
     future.then((response) => setRepositories(response));
   };
 
   const getStarredData = () => {
-    const future = requestData(input + '/starred');
+    const future = requestData(searchInput + '/starred');
     future.then((response) => setStarreds(response));
   };
 
   return (
     <div className="">
-      <nav className="w-100 row py-3">
-        <p className="d-flex justify-content-center col-12">QuestGit</p>
+      <NavBar
+        inputValue={searchInput}
+        setInput={setSearchInput}
+        getUserData={getUserData}
+      />
 
-        <div className="d-flex justify-content-center col-12">
-          <Input
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={(event) => event.key === 'Enter' && getUserData()}
-          />
-
-          <Button onClick={getUserData} text="search" />
-        </div>
-      </nav>
-
-      <main className="">
+      <main className="container">
         {user && <Profile user={user} starreds={starreds} />}
 
-        <div className="d-flex justify-content-center">
+        <div className="row justify-content-around">
           <Button
             onClick={() => {
               setIsStarreds(true);
