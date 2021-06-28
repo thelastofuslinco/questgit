@@ -52,7 +52,7 @@ export default function Profile({ user, starreds }) {
           </p>
         )}
       </div>
-      <p className="m-4 border rounded p-2">{user.bio}</p>
+      {user.bio && <p className="m-4 border rounded p-2">{user.bio}</p>}
     </div>
   );
 }
