@@ -1,5 +1,5 @@
 import './scss/app.scss';
-import Home from './screen/HomeScreen';
+import Home from './screens/HomeScreen';
 import React from 'react';
 import { GlobalState } from './global/GlobalContextData';
 

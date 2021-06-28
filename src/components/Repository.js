@@ -1,9 +1,8 @@
 import React from 'react';
 
 export default function Repository({ repository }) {
-  console.log(repository);
   return (
-    <a href={`${repository.html_url}`} target="blank">
+    <a className="repoLink" href={`${repository.html_url}`} target="blank">
       <div className="border rounded my-4 p-2">
         <p>{repository.name}</p>
         <p>{repository.description}</p>

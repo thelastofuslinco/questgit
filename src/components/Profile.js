@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Profile({ user, starreds }) {
-  console.log(user);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
       <div className="mb-3">

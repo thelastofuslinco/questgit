@@ -11,7 +11,6 @@ export function GlobalState({ children }) {
 
   //Puxa os dados do usuario
   const getUserData = (searchInput) => {
-    console.log(searchInput);
     const future = requestData(searchInput);
     future.then((response) => setUser(response));
     getRepoData(searchInput);
