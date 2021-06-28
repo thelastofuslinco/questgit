@@ -1,66 +1,75 @@
-import React, { useEffect, useState } from 'react';
+import Button from '../components/Button';
+import NavBar from '../components/NavBar';
+import Profile from '../components/Profile';
+import Repository from '../components/Repository';
+import Starred from '../components/Starred';
+import React, { useState } from 'react';
 import { requestData } from '../utils/Requests';
 
 export default function HomeScreen() {
   // user data
-  const [user, setUser] = useState({});
-  const [starred, setStarred] = useState({});
-  const [repositories, setRepositories] = useState({});
+  const [user, setUser] = useState('');
+  const [starreds, setStarreds] = useState([]);
+  const [repositories, setRepositories] = useState([]);
 
-  const [input, setInput] = useState('');
+  const [isRepositories, setIsRepositories] = useState(false);
+  const [isStarreds, setIsStarreds] = useState(false);
 
-  useEffect(() => {
-    console.log(user);
-    console.log(repositories);
-    console.log(starred);
-  }, [starred]);
+  const [searchInput, setSearchInput] = useState('');
 
   const getUserData = () => {
-    const future = requestData(input);
+    const future = requestData(searchInput);
     future.then((response) => setUser(response));
     getRepoData();
     getStarredData();
   };
 
   const getRepoData = () => {
-    const future = requestData(input + '/repos');
+    const future = requestData(searchInput + '/repos');
     future.then((response) => setRepositories(response));
   };
 
   const getStarredData = () => {
-    const future = requestData(input + '/starred');
-    future.then((response) => setStarred(response));
+    const future = requestData(searchInput + '/starred');
+    future.then((response) => setStarreds(response));
   };
 
   return (
-    <div className="vh-100 bg-dark">
-      <nav className="w-100 row py-3">
-        <p className="d-flex justify-content-center col-12">QuestGit</p>
+    <div className="">
+      <NavBar
+        inputValue={searchInput}
+        setInput={setSearchInput}
+        getUserData={getUserData}
+      />
 
-        <div className="d-flex justify-content-center col-12">
-          <input
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
+      <main className="container">
+        {user && <Profile user={user} starreds={starreds} />}
+
+        <div className="row justify-content-around">
+          <Button
+            onClick={() => {
+              setIsStarreds(true);
+              setIsRepositories(false);
+            }}
+            text="starred"
           />
-
-          <button onClick={getUserData}>search</button>
+          <Button
+            onClick={() => {
+              setIsStarreds(false);
+              setIsRepositories(true);
+            }}
+            text="repos"
+          />
         </div>
-      </nav>
 
-      <main className="">
-        <button onClick={getStarredData}>starred</button>
-        <button onClick={getRepoData}>repos</button>
-
-        <div>
-          <img src={user.avatar_url} height="200px" />
-          <p>tagname: {user.login}</p>
-          <p>name: {user.name}</p>
-          <p>followers: {user.followers}</p>
-          <p>following: {user.following}</p>
-          <p>public_repos: {user.public_repos}</p>
-          <p>location: {user.location}</p>
-          <p>bio: {user.bio}</p>
-        </div>
+        {isRepositories &&
+          repositories.map((repository, index) => (
+            <Repository repository={repository} key={index} />
+          ))}
+        {isStarreds &&
+          starreds.map((starred, index) => (
+            <Starred starred={starred} key={index} />
+          ))}
       </main>
     </div>
   );

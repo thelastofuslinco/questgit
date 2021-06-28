@@ -1,9 +1,10 @@
-import './scss/custom.scss';
+import './scss/app.scss';
 import Home from './screen/HomeScreen';
+import React from 'react';
 
 function App() {
   return (
-    <div>
+    <div className="vh-100">
       <Home />
     </div>
   );

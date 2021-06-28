@@ -1,0 +1,20 @@
+//Profile classnames
+.title {
+  @include font-size(2.5rem);
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.subTitle {
+  @include font-size(2rem);
+  font-weight: 500;
+}
+
+.profileIcon {
+  position: absolute;
+  transform: translate(-36px, 155px);
+  background-color: $qg-dark-a;
+  padding: 6px 10px;
+  border-radius: 2rem;
+  border: 1px solid $gray-700;
+}
