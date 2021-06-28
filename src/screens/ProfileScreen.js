@@ -3,49 +3,41 @@ import NavBar from '../components/NavBar';
 import Profile from '../components/Profile';
 import Repository from '../components/Repository';
 import Starred from '../components/Starred';
-import React, { useState } from 'react';
-import { requestData } from '../utils/Requests';
+import React, { useState, useEffect } from 'react';
+import { useGlobalContext } from '../global/GlobalContextData';
+import { useHistory, useParams } from 'react-router-dom';
 
-export default function HomeScreen() {
-  // user data
-  const [user, setUser] = useState('');
-  const [starreds, setStarreds] = useState([]);
-  const [repositories, setRepositories] = useState([]);
+export default function ProfileScreen() {
+  const { user, starreds, repositories, getUserData } = useGlobalContext();
+  const [searchInput, setSearchInput] = useState('');
 
   const [isRepositories, setIsRepositories] = useState(false);
   const [isStarreds, setIsStarreds] = useState(false);
+  const { userName } = useParams();
 
-  const [searchInput, setSearchInput] = useState('');
+  const history = useHistory();
 
-  const getUserData = () => {
-    const future = requestData(searchInput);
-    future.then((response) => setUser(response));
-    getRepoData();
-    getStarredData();
-  };
-
-  const getRepoData = () => {
-    const future = requestData(searchInput + '/repos');
-    future.then((response) => setRepositories(response));
-  };
-
-  const getStarredData = () => {
-    const future = requestData(searchInput + '/starred');
-    future.then((response) => setStarreds(response));
-  };
+  useEffect(() => {
+    if (userName !== undefined) {
+      getUserData(userName);
+    }
+  }, [userName]);
 
   return (
     <div className="">
       <NavBar
         inputValue={searchInput}
         setInput={setSearchInput}
-        getUserData={getUserData}
+        getUserData={() => {
+          getUserData(`${searchInput.length ? searchInput : userName}`);
+          history.push(`/${searchInput}`);
+        }}
       />
 
       <main className="container">
         {user && <Profile user={user} starreds={starreds} />}
 
-        <div className="row justify-content-around">
+        <div className="row justify-content-around my-2">
           <Button
             onClick={() => {
               setIsStarreds(true);

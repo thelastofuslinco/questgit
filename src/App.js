@@ -1,11 +1,14 @@
 import './scss/app.scss';
-import Home from './screen/HomeScreen';
 import React from 'react';
+import { GlobalState } from './global/GlobalContextData';
+import { Routes } from './routes';
 
 function App() {
   return (
     <div className="vh-100">
-      <Home />
+      <GlobalState>
+        <Routes />
+      </GlobalState>
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import axios from 'axios';
+import { client_id, client_secret } from './clientKey';
 
 const url = 'https://api.github.com/users/';
-const client_id = '73dfdd4e1781f4a851a9';
-const client_secret = '0674ab30d11d8235674e4e9ec926b2cb3267d4cd';
 
 export const requestData = async (request) => {
   try {

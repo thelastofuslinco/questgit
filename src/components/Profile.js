@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Profile({ user, starreds }) {
-  console.log(user);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
       <div className="mb-3">
@@ -53,7 +52,7 @@ export default function Profile({ user, starreds }) {
           </p>
         )}
       </div>
-      <p className="m-4 border rounded p-2">{user.bio}</p>
+      {user.bio && <p className="m-4 border rounded p-2">{user.bio}</p>}
     </div>
   );
 }
