@@ -4,42 +4,23 @@ import Profile from '../components/Profile';
 import Repository from '../components/Repository';
 import Starred from '../components/Starred';
 import React, { useState } from 'react';
-import { requestData } from '../utils/Requests';
+import { useGlobalContext } from '../global/GlobalContextData';
 
 export default function HomeScreen() {
-  // user data
-  const [user, setUser] = useState('');
-  const [starreds, setStarreds] = useState([]);
-  const [repositories, setRepositories] = useState([]);
+  const { user, starreds, repositories, getUserData } = useGlobalContext();
+  const [searchInput, setSearchInput] = useState('');
 
   const [isRepositories, setIsRepositories] = useState(false);
   const [isStarreds, setIsStarreds] = useState(false);
-
-  const [searchInput, setSearchInput] = useState('');
-
-  const getUserData = () => {
-    const future = requestData(searchInput);
-    future.then((response) => setUser(response));
-    getRepoData();
-    getStarredData();
-  };
-
-  const getRepoData = () => {
-    const future = requestData(searchInput + '/repos');
-    future.then((response) => setRepositories(response));
-  };
-
-  const getStarredData = () => {
-    const future = requestData(searchInput + '/starred');
-    future.then((response) => setStarreds(response));
-  };
 
   return (
     <div className="">
       <NavBar
         inputValue={searchInput}
         setInput={setSearchInput}
-        getUserData={getUserData}
+        getUserData={() => {
+          getUserData(searchInput);
+        }}
       />
 
       <main className="container">

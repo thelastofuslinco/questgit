@@ -1,36 +1,41 @@
-import React, { useState, createContext } from 'react';
-import { requestData } from 'utils/Requests';
+import React, { useState, createContext, useContext } from 'react';
+import { requestData } from '../utils/Requests';
 
 const GlobalStateContext = createContext();
 
 export function GlobalState({ children }) {
-  //dados do aplicativo
-  const [searchInput, setSearchInput] = useState('');
+  //Dados do aplicativo
   const [user, setUser] = useState('');
   const [starreds, setStarreds] = useState([]);
   const [repositories, setRepositories] = useState([]);
 
   //Puxa os dados do usuario
-  const getUserData = () => {
+  const getUserData = (searchInput) => {
+    console.log(searchInput);
     const future = requestData(searchInput);
     future.then((response) => setUser(response));
-    getRepoData();
-    getStarredData();
+    getRepoData(searchInput);
+    getStarredData(searchInput);
   };
 
-  const getRepoData = () => {
+  const getRepoData = (searchInput) => {
     const future = requestData(searchInput + '/repos');
     future.then((response) => setRepositories(response));
   };
 
-  const getStarredData = () => {
+  const getStarredData = (searchInput) => {
     const future = requestData(searchInput + '/starred');
     future.then((response) => setStarreds(response));
   };
 
   return (
     <GlobalStateContext.Provider
-      value={{ searchInput, setSearchInput, user, starreds, repositories }}
+      value={{
+        user,
+        starreds,
+        repositories,
+        getUserData,
+      }}
     >
       {children}
     </GlobalStateContext.Provider>
@@ -38,5 +43,14 @@ export function GlobalState({ children }) {
 }
 
 export const useGlobalContext = () => {
-  return;
+  const context = useContext(GlobalStateContext);
+
+  const { user, starreds, repositories, getUserData } = context;
+
+  return {
+    user,
+    starreds,
+    repositories,
+    getUserData,
+  };
 };
