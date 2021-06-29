@@ -39,8 +39,8 @@ export default function ProfileScreen() {
           {user && <Profile user={user} starreds={starreds} />}
         </div>
 
-        <div className=" my-2">
-          <div className="row justify-content-around">
+        <div className=" my-2 col-md-6">
+          <div className="row justify-content-around mb-2">
             <Button
               className="btn btn-primary col-5"
               onClick={() => {
