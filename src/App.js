@@ -5,7 +5,7 @@ import { Routes } from './routes';
 
 function App() {
   return (
-    <div className="vh-100">
+    <div className="">
       <GlobalState>
         <Routes />
       </GlobalState>
