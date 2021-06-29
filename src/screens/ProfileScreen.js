@@ -35,7 +35,7 @@ export default function ProfileScreen() {
       />
 
       <main className="container d-flex flex-md-row flex-column">
-        <div className="">
+        <div className="col-md-6">
           {user && <Profile user={user} starreds={starreds} />}
         </div>
 
