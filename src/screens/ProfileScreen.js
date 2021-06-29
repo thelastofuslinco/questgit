@@ -34,47 +34,51 @@ export default function ProfileScreen() {
         }}
       />
 
-      <main className="container">
-        {user && <Profile user={user} starreds={starreds} />}
-
-        <div className="row justify-content-around my-2">
-          <Button
-            className="btn btn-primary col-5"
-            onClick={() => {
-              setIsStarreds(true);
-              setIsRepositories(false);
-            }}
-            text="Estrelado"
-          />
-          <Button
-            className="btn btn-primary col-5"
-            onClick={() => {
-              setIsStarreds(false);
-              setIsRepositories(true);
-            }}
-            text="Repositorios"
-          />
+      <main className="container d-flex flex-md-row flex-column">
+        <div className="">
+          {user && <Profile user={user} starreds={starreds} />}
         </div>
 
-        {isRepositories && <p>Repositorios</p>}
-        {isStarreds && <p>Estrelado</p>}
-        {(isRepositories && <hr className="bg-white" />) ||
-          (isStarreds && <hr className="bg-white" />)}
+        <div className=" my-2">
+          <div className="row justify-content-around">
+            <Button
+              className="btn btn-primary col-5"
+              onClick={() => {
+                setIsStarreds(true);
+                setIsRepositories(false);
+              }}
+              text="Estrelado"
+            />
+            <Button
+              className="btn btn-primary col-5"
+              onClick={() => {
+                setIsStarreds(false);
+                setIsRepositories(true);
+              }}
+              text="Repositorios"
+            />
+          </div>
 
-        {isRepositories &&
-          repositories.map((repository, index) => (
-            <Repository repository={repository} key={index} />
-          ))}
-        {isStarreds &&
-          starreds.map((starred, index) => (
-            <Repository repository={starred} key={index} />
-          ))}
-        <HasRepository repository={starreds} isRepository={isStarreds} />
+          {isRepositories && <p>Repositorios</p>}
+          {isStarreds && <p>Estrelado</p>}
+          {(isRepositories && <hr className="bg-white" />) ||
+            (isStarreds && <hr className="bg-white" />)}
 
-        <HasRepository
-          repository={repositories}
-          isRepository={isRepositories}
-        />
+          {isRepositories &&
+            repositories.map((repository, index) => (
+              <Repository repository={repository} key={index} />
+            ))}
+          {isStarreds &&
+            starreds.map((starred, index) => (
+              <Repository repository={starred} key={index} />
+            ))}
+          <HasRepository repository={starreds} isRepository={isStarreds} />
+
+          <HasRepository
+            repository={repositories}
+            isRepository={isRepositories}
+          />
+        </div>
       </main>
     </div>
   );

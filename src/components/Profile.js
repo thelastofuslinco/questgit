@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Profile({ user, starreds }) {
   return (
-    <div className="d-flex px-0 flex-column align-items-center ">
+    <div className="d-flex px-0 flex-column align-items-center">
       <div className="mb-3">
         <a href={`${user.html_url}`} target="blank">
           {' '}
