@@ -4,22 +4,27 @@ import { useGlobalContext } from '../global/GlobalContextData';
 import { useHistory, useParams } from 'react-router-dom';
 
 export default function HomeScreen() {
-  const { getUserData } = useGlobalContext();
+  const { getUserData, user } = useGlobalContext();
   const [searchInput, setSearchInput] = useState('');
-  const { user } = useParams();
+  const { userName } = useParams();
 
   const history = useHistory();
 
   return (
-    <div className="">
+    <div className="container">
       <NavBar
-        inputValue={searchInput}
-        setInput={setSearchInput}
-        getUserData={() => {
-          getUserData(`${searchInput.length ? searchInput : user}`);
+        value={searchInput}
+        setValue={setSearchInput}
+        getData={() => {
+          getUserData(`${searchInput.length ? searchInput : userName}`);
+
           history.push(`/${searchInput}`);
         }}
       />
+
+      {user ? null : (
+        <p className="text-center">Digite a tag de usuário valido!</p>
+      )}
     </div>
   );
 }

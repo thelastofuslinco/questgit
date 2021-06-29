@@ -2,13 +2,16 @@ import React from 'react';
 
 export default function Profile({ user, starreds }) {
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center">
+    <div className="d-flex px-0 flex-column align-items-center">
       <div className="mb-3">
-        <img
-          src={user.avatar_url}
-          height="200px"
-          className="rounded-circle border border-qg-dark"
-        />
+        <a href={`${user.html_url}`} target="blank">
+          {' '}
+          <img
+            src={user.avatar_url}
+            height="200px"
+            className="rounded-circle border border-qg-dark"
+          />{' '}
+        </a>
         <i className="bi bi-laptop profileIcon border border-qg-dark"></i>
       </div>
 
@@ -18,7 +21,7 @@ export default function Profile({ user, starreds }) {
       <div className="">
         <p className="mb-0 ">
           <i className="bi bi-people-fill"></i> {user.followers} followers{' '}
-          {user.following} following {starreds.length}{' '}
+          {user.following} following {starreds ? starreds.length : null}{' '}
           <i className="bi bi-star-fill"></i>
         </p>
 
